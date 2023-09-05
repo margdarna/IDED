@@ -1,4 +1,4 @@
- %----------------------------------------------------------------------
+%----------------------------------------------------------------------
 %                       Description
 %----------------------------------------------------------------------
 %
@@ -72,13 +72,13 @@ project_dir = 'C:\_USER\Margarita\A05-SFB1436\';
 % from laptop
 %project_dir = 'C:\Users\mdarna\Documents\PhD\A05-SFB1436\';
 % remaining directories
-exp_dir = sprintf('%sCode\\IDED\\', project_dir);
+exp_dir = sprintf('%sExpCode\\', project_dir);
 img_dir = sprintf('%sStimuli\\', exp_dir);
 raw_data_dir = sprintf('%sData\\Raw_Data\\', project_dir);
 subj_stim_dir = sprintf('%sSubject_Stimuli\\', exp_dir);
 
 % io64 directory, directory where mexfile is located
-io64_dir = sprintf('%sCode\\IDED\\trigger\\', project_dir);
+io64_dir = sprintf('%sExpCode\\\trigger\\', project_dir);
 
 %Screen('Preference', 'SkipSyncTests', 1);%
 %----------------------------------------------------------------------
@@ -263,15 +263,15 @@ dotSizePix = 30;
 %                           Text
 %----------------------------------------------------------------------
 welcome_text1 = 'Wilkommen!\n';
-welcome_text2 = sprintf('Gleich beginnen wir mit den Übungsdurchgängen.\n ');
+welcome_text2 = sprintf('Gleich beginnen wir mit den ÃœbungsdurchgÃ¤ngen.\n ');
 
-finish_practice_text1 = 'Ende der Übungsrunde.\n';
+finish_practice_text1 = 'Ende der Ãœbungsrunde.\n';
 finish_practice_text2 = 'Gibt es noch Fragen?\n';
 
 break_text   = 'PAUSE\n\n';
-press_any_button_text = 'Drücke eine beliebige Maustaste zum Weitermachen.\n';
+press_any_button_text = 'DrÃ¼cke eine beliebige Maustaste zum Weitermachen.\n';
 
-end_text = 'ENDE\nVielen Dank für die Teilnahme.\nBitte wende dich an die Versuchsleiterin';
+end_text = 'ENDE\nVielen Dank fÃ¼r die Teilnahme.\nBitte wende dich an die Versuchsleiterin';
 
 %%
 %----------------------------------------------------------------------
