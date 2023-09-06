@@ -41,14 +41,8 @@ is_young  = categorical(age_group) == 'young';
 is_old  = categorical(age_group) == 'old';
 subj_young = subs(is_young);
 subj_old = subs(~is_young);
-
-dem_info =  readtable(strcat(dirs.raw_dt_dir, 'Demographics.xlsx'));
-% make sure that age and gender is assigned to the correct subject
-for i = 1:numel(subs)
-    subj = subs{i};
-    age(i) = dem_info.Age(strcmp(dem_info.Pseudonym,subj), :);
-    gender(i) = dem_info.Gender(strcmp(dem_info.Pseudonym,subj), :);
-end
+age= subj_info.age;
+gender = subj_info.Gender;
 
 % display some summary information
 fprintf('Young:\nAge:   %.1f +- %.1f\n', mean(age(is_young)), std(age(is_young)))
