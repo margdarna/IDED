@@ -47,14 +47,8 @@ age_group = subj_info.age_cohort;
 is_young  = categorical(age_group) == 'young';
 subj_young = subs(is_young);
 subj_old = subs(~is_young);
-
-dem_info =  readtable(strcat(dirs.raw_dt_dir, 'Demographics.xlsx'));
-% arrange the age in the order of subjects
-for i = 1:numel(subs)
-    subj = subs{i};
-    age(i) = dem_info.Age(strcmp(dem_info.Pseudonym,subj), :);
-    gender(i) = dem_info.Gender(strcmp(dem_info.Pseudonym,subj), :);
-end
+age= subj_info.age;
+gender = subj_info.Gender;
 
 % Calculate average age for each age group
 tblstats = grpstats(subj_info(:,2:3),"age_cohort", ["mean" "std"]);
