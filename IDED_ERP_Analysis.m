@@ -17,7 +17,7 @@ clear;clc;
 % Setting up needed directories
 dirs = {};
 % change project_dir accordingly
-dirs.project_dir = 'C:\your_project_directory\';  
+dirs.proj_dir = 'C:\your_project_directory\';  
 dirs.dt_dir         = strcat (dirs.proj_dir, 'Data/');
 dirs.exp_dir        = strcat (dirs.proj_dir, 'IDED_v1_Analysis/');
 dirs.raw_dt_dir     = strcat(dirs.dt_dir, 'Raw_data/');
