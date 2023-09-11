@@ -14,10 +14,9 @@
 % Cleaning workspace and command window
 clear;clc;
 % Setting up needed directories
-% asjust accordingly
 dirs = {};
-%dirs.proj_dir = 'C:\Users\mdarna\Documents\PhD\A05-SFB1436\';    
-dirs.proj_dir       = '//linstore01/home/mdarna/PhD/A05-SFB1436/';    
+% change project_dir accordingly
+dirs.proj_dir = 'C:/your_project_directory/';  
 dirs.dt_dir         = strcat (dirs.proj_dir, 'Data/');
 dirs.exp_dir        = strcat (dirs.proj_dir, 'IDED_v1_Analysis/');
 dirs.raw_dt_dir     = strcat(dirs.dt_dir, 'Raw_data/');
