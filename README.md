@@ -3,7 +3,7 @@
 
 This code belongs to the paper "Age effects on electrocortical processing during intradimensional/extradimensional set shifting" by Darna et al. (2023), Preprint will be available soon
 
-## Requirements
+## Requirements:
 This code was developed and run using the following software:
 - Windows 10 Professional 64-bit
 - [MATLAB R2021b](https://de.mathworks.com/help/matlab/release-notes.html) (Version 9.11)
@@ -19,6 +19,9 @@ For EEG analysis:
 
 For statistics:
 - [RStudio](https://posit.co/download/rstudio-desktop/) (R version 4.2.2)
+
+## Movies:
+The folder movie includes GIFs of theta power for each condition of the paradigm and each age group.
 
 ## The IDED Paradigm:
 In order to be able to run the IDED paradigm on your computer copy [ExpCode](https://github.com/margdarna/IDED/tree/main/ExpCode) on your computer.
@@ -44,11 +47,11 @@ In order to be able to run the IDED paradigm on your computer copy [ExpCode](htt
 - Currently, trigger lines are commented out, because the code does not run if io64 is not available on your device. If you want to use triggers, e.g. for the purposes of EEG, you would need to remove the comments from those lines. These are the lines that concern the variable 'trig'.
 - The instruction text is currently in German. Feel free to adapt.
 
-## MATLAB Scripts
+## MATLAB Scripts:
 The MATLAB Scripts require the folder [Functions](https://github.com/margdarna/IDED/tree/main/Functions) to work correctly. If the folder is saved in the same folder as the other MATLAB scripts function
 IDED Analysis, Behavioral Results:
 
-### Behavioral results
+### Behavioral results:
 The extraction of behavioral results as .csv table for further statistical analysis is performed with the script [summary_stat](https://github.com/margdarna/IDED/blob/main/summary_stat.m).
 The script reads participant information from the table 'Protocol.xlsx'.
 
@@ -74,7 +77,7 @@ Here is a brief description of the scripts:
 - [7_two_way_ANOVA_EMCO_theta250power.R](https://github.com/margdarna/IDED/blob/main/Statistics/7_two_way_ANOVA_EMCO_theta250power.R): mixed 2x3 ANOVA of frontocentral theta power.
 - [8_IDED_singletrl_theta_RT_Shepherd.R](https://github.com/margdarna/IDED/blob/main/Statistics/8_IDED_singletrl_theta_RT_Shepherd.R): mixed 2x3 ANOVA of z-values (a.k.a transformed shepherd's pi from single trial correlations between reaction time and theta power).
 
-## Contact information
+## Contact information:
 For any questions, please contact:
 
 margarita.darna@lin-magdeburg.de
