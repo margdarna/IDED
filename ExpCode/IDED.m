@@ -66,11 +66,7 @@ sca;
 
 % Define directories
 % from EEG Lab
-project_dir = 'C:\_USER\Margarita\A05-SFB1436\';
-% from office PC
-%project_dir = '\\linstore01\home\mdarna\PhD\A05-SFB1436\';
-% from laptop
-%project_dir = 'C:\Users\mdarna\Documents\PhD\A05-SFB1436\';
+project_dir = 'C:\your_project_directory\';
 % remaining directories
 exp_dir = sprintf('%sExpCode\\', project_dir);
 img_dir = sprintf('%sStimuli\\', exp_dir);
