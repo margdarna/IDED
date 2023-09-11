@@ -66,6 +66,7 @@ sca;
 
 % Define directories
 % from EEG Lab
+% change project_dir accordingly
 project_dir = 'C:\your_project_directory\';
 % remaining directories
 exp_dir = sprintf('%sExpCode\\', project_dir);
