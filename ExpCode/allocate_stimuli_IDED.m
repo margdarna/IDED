@@ -24,10 +24,9 @@
 clear; clc;
 
 % Define directories
-% from office PC
-% project_dir = 'H:\PhD\A05-SFB1436\';
 % from laptop
-project_dir = '//linstore01/home/mdarna/PhD/A05-SFB1436/';
+% change project_dir accordingly
+project_dir = 'C:/your_project_directory/';
 %project_dir = 'C:/Users/mdarna/Documents/PhD/A05-SFB1436/';
 exp_dir = sprintf('%sCode/IDED/', project_dir);
 subj_stim_dir = sprintf('%sSubject_Stimuli/', exp_dir);
