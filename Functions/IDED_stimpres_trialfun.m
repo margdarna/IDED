@@ -6,6 +6,8 @@ function trl = IDED_stimpres_trialfun(cfg)
 % cfg.trialdef.prestim
 % cfg.trialdef.poststim
 % cfg.trialdef.trigger_type can be 'nexttrigger', 'previoustrigger'
+% we use 'nexttrigger' when we want trials to be stimulus locked
+% we use 'previoustrigger' when we want trials to be response locked
 
 % define header and events
 hdr   = ft_read_header(cfg.dataset);
@@ -117,9 +119,9 @@ for i=1:length(stimulus)
                 RT = stimulus(i).dt_sample; % this is for event locked data
             end
             % check if the trial overlaps with an artifact
-            % check if any artifact starts before epoch begin but finishes after epoch begin 
+            % check if any artifact starts before epoch begins but finishes after epoch begins 
             ind_beg = begsample >= artifact(:,1) & begsample <= artifact(:,2);
-            % check if any artifact starts before epoch end but finishes after epoch end 
+            % check if any artifact starts before epoch ends but finishes after epoch ends 
             ind_end = endsample >= artifact(:,1) & endsample <= artifact(:,2);
             % check if any artifact starts after epoch starts but finishes before epoch finishes            
             ind_in = begsample <= artifact(:,1) & endsample >= artifact(:,2);
@@ -136,6 +138,6 @@ for i=1:length(stimulus)
         end
     end
 end
-% inform user about rejected trials
+% inform user about number of rejected trials
 fprintf('rejected %i trials with artifacts \n', rejected)
 end
