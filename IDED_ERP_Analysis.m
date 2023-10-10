@@ -22,7 +22,7 @@ dirs.dt_dir         = strcat (dirs.proj_dir, 'Data/');
 dirs.exp_dir        = strcat (dirs.proj_dir, 'IDED_v1_Analysis/');
 dirs.raw_dt_dir     = strcat(dirs.dt_dir, 'Raw_data/');
 dirs.derived_dt_dir = strcat(dirs.dt_dir, 'Derived_data/IDED/');
-dirs.analysis_dir   = strcat(dirs.exp_dir, 'Analysis/');
+dirs.analysis_dir   = strcat(dirs.exp_dir, 'Functions/');
 dirs.output_dir     = strcat(dirs.exp_dir, 'Output/');
 dirs.prepr_dir      = strcat(dirs.output_dir, '1_Preprocessing/');
 
@@ -37,7 +37,8 @@ ft_defaults
 prestim = 1.25;
 poststim = 3;
 
-subj_info = readtable(strcat(dirs.analysis_dir, 'Protocol.xlsx'));
+% read Protocol table with subject information
+subj_info = readtable(strcat(dirs.exp_dir, 'Protocol.xlsx'));
 subj_info = subj_info(subj_info.Excluded== 0,:);
 subs      = subj_info.Pseudonym;
 age_group = subj_info.age_cohort;
@@ -51,7 +52,6 @@ tblstats = grpstats(subj_info(:,2:3),"age_cohort", ["mean" "std"]);
 [GC_young,GR_young] = groupcounts(subj_info(is_young,:).Gender);
 [GC_old,GR_old] = groupcounts(subj_info(~is_young,:).Gender);
 
-
 %%
 %----------------------------------------------------------------------
 %                 Load single subject EEG and prepare epochs
@@ -62,7 +62,7 @@ for i = 1 : height(subs)
 clear subjectdata
 subj = subs{i};
 
-% print information in command windo
+% print information in command window
 fprintf("************************\nStarting %s\n************************\n", subj)
 
 % define the filenames, parameters and other information that is subject
