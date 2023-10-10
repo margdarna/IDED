@@ -21,7 +21,7 @@ dirs.dt_dir         = strcat (dirs.proj_dir, 'Data/');
 dirs.exp_dir        = strcat (dirs.proj_dir, 'IDED_v1_Analysis/');
 dirs.raw_dt_dir     = strcat(dirs.dt_dir, 'Raw_data/');
 dirs.derived_dt_dir = strcat(dirs.exp_dir, 'Data/Derived_data/');
-dirs.analysis_dir   = strcat(dirs.exp_dir, 'Analysis/');
+dirs.analysis_dir   = strcat(dirs.exp_dir, 'Functions/');
 dirs.output_dir     = strcat(dirs.exp_dir, 'Output/');
 dirs.prepr_dir      = strcat(dirs.output_dir, '1_Preprocessing/');
 
@@ -124,7 +124,7 @@ for i = 1:height(subs)
     ind            = ismember(perf.resp_mat.trial, last_TFR_trial.trialinfo(:,3));
     RT_last        = perf.resp_mat.RT(ind);
 
-    % perform shepher's Pi correlation
+    % perform shepherd's Pi correlation
     % alltrl
     [Pi, p, ~] = Shepherd(theta_alltrl, RT_alltrl);
     % save information in array
@@ -151,6 +151,7 @@ for i = 1:height(subs)
     %outlier_repeat2 = o1;
     % calculate Fisher's z
     z_repeat2(i) = 0.5 * log((1 + Pi) / (1 - Pi));
+    
     % ID
     [Pi, p, ~] = Shepherd(theta_ID, RT_ID);
     % save information in array
