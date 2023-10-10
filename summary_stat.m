@@ -21,7 +21,7 @@ dirs.dt_dir         = strcat (dirs.proj_dir, 'Data/');
 dirs.exp_dir        = strcat (dirs.proj_dir, 'IDED_v1_Analysis/');
 dirs.raw_dt_dir     = strcat(dirs.dt_dir, 'Raw_data/');
 dirs.derived_dt_dir = strcat(dirs.exp_dir, 'Data/Derived_data/');
-dirs.analysis_dir   = strcat(dirs.exp_dir, 'Analysis/');
+dirs.analysis_dir   = strcat(dirs.exp_dir, 'Functions/');
 dirs.output_dir     = strcat(dirs.exp_dir, 'Output/');
 dirs.prepr_dir      = strcat(dirs.output_dir, '1_Preprocessing/');
 
@@ -121,7 +121,6 @@ T.within = [repmat('repeat', sum(is_young), 1); repmat('repeat', sum(~is_young),
 T.gender =  [gender(is_young)' - 1; gender(is_old)' - 1; gender(is_young)' - 1; gender(is_old)' - 1; ...
     gender(is_young)' - 1; gender(is_old)' - 1;];
 writetable(T, strcat(dirs.output_dir, '4_Stats\stat_RT_repeat_ID_ED.csv'));
-
 
 
 % Error rate
