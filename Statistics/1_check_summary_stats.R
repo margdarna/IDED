@@ -5,8 +5,8 @@ library(tidyverse)
 library(ggpubr)
 library(rstatix)
 
-# set working directory
-setwd("//linstore01/home/mdarna/PhD/A05-SFB1436/IDED_v1_Analysis")
+# set working directory, here change accordingly
+setwd("your_directory")
 
 # I loaded the data by just finding them in their folder
 data_all <- read.table("Protocol.csv", sep = ',', header = TRUE)
@@ -14,8 +14,9 @@ data_all <- read.table("Protocol.csv", sep = ',', header = TRUE)
 # ignore excluded participants
 data <- data_all[data_all$Excluded == 0,]
 
-#########
+#################################################
 # check if we have a statistical difference in age
+#################################################
 # test t-test assumptions:
 # Shapiro-Wilk normality test for young age
 with(data, shapiro.test(age[age_cohort == "young"]))# p = 0.33
@@ -32,8 +33,10 @@ res.ftest
 res <- t.test(age ~ age_cohort, data = data, var.equal = FALSE)
 res
 
-########
+###########################################################
 # check if we have statistical difference in education years
+###########################################################
+
 # transform Education in numeric values
 data$Education <- as.numeric(data$Education) 
 # test t-test assumptions:
@@ -52,9 +55,10 @@ res
 # p = 0.7474
 # W = 172
 
-#####
-#########
+
+###############################################################
 # check if we have a statistical difference in MWTB performance
+###############################################################
 # test t-test assumptions:
 # Shapiro-Wilk normality test for young age
 with(data, shapiro.test(MWTB[age_cohort == "young"]))# p = 0.66
@@ -71,8 +75,9 @@ res
 # p = 0.0008
 # W = 294
 
-######
+######################################################
 # check if we have a difference in gender distribution
+######################################################
 # Create a data frame from the main data set.
 str_data = data.frame(data$Gender,data$age_cohort)
 
