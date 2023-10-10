@@ -1,3 +1,4 @@
+# load required libraries
 library(tidyverse)
 library(ggpubr)
 library(rstatix)
@@ -6,17 +7,21 @@ library(survminer)
 library(survival)
 library(ggplot2)
 
-setwd("//linstore01/home/mdarna/PhD/A05-SFB1436/IDED_v1_Analysis/Output/4_Stats")
+# set directories
+setwd("your_directory")
 
-# Load in data
+# Load data
 data <- read.table("ASST_survival.csv", sep = ',', header = TRUE)
 
+# separate by age group
 data_young = data[data$Age == 1,]
 data_old = data[data$Age == 2,]
 
 # Comparison between two groups
 fit_ASSTD <- survfit(Surv(ASSTD_surv, FAILED_ASSTD) ~ Age, data = data, conf.type = "log-log")
 summary(fit_ASSTD)
+
+# plot results
 p = ggsurvplot(fit_ASSTD, data = data, conf.int = TRUE, xlab = "Stage number", title = "ASSTD",
            break.time.by = 1, xlim = c(0.5, 8.5))
 p
