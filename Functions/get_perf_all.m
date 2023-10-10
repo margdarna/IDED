@@ -29,17 +29,6 @@ for n = 1: numel(task)
         perf_all.ASSTD.error.error_all           = nan(numel(perf_all.subs), 1);
         perf_all.ASSTD.error.error_in_stage      = nan(numel(perf_all.subs), 9);
         perf_all.ASSTD.error.trials_to_criterion = nan(numel(perf_all.subs), 9);
-    elseif any(strcmp(task, "ASST-G")) || any(strcmp(task, "ASST-Gabor")) || any(strcmp(task, "ASSTG"))
-        % ASST-Gabor
-        perf_all.ASSTG.RT.median_all             = nan(numel(perf_all.subs), 1);
-        perf_all.ASSTG.RT.median_repeat          = nan(numel(perf_all.subs), 1);
-        perf_all.ASSTG.RT.median_shift           = nan(numel(perf_all.subs), 1);
-        perf_all.ASSTG.RT.median_first           = nan(numel(perf_all.subs), 1);
-        perf_all.ASSTG.RT.median_second          = nan(numel(perf_all.subs), 1);
-        perf_all.ASSTG.RT.median_last            = nan(numel(perf_all.subs), 1);
-        perf_all.ASSTG.error.error_all           = nan(numel(perf_all.subs), 1);
-        perf_all.ASSTG.error.error_in_stage      = nan(numel(perf_all.subs), 9);
-        perf_all.ASSTG.error.trials_to_criterion = nan(numel(perf_all.subs), 9);
     elseif any(task(n) == "IDED")
         % IDED
         perf_all.IDED.RT.median_all    = nan(numel(perf_all.subs), 1);
@@ -293,96 +282,6 @@ for n = 1:numel(task)
                 perf_all.ASSTD.error.error_all(i,1)              = perf.error.error_all;
                 perf_all.ASSTD.error.error_in_stage(i, :)      = perf.error.error_in_stage;
                 perf_all.ASSTD.error.trials_to_criterion(i, :) = perf.error.trials_to_criterion;
-
-                save(sprintf('%s%s/%s_task-%s_perf.mat', dirs.derived_dt_dir, perf_all.subs{i}, perf_all.subs{i}, task(n)), 'perf')
-
-                clear('perf', 'x', 'ind');
-
-                fprintf('%s: Succesfull!\n', perf_all.subs{i})
-            catch
-                fprintf('%s: An error occured during error calculation\n', perf_all.subs{i})
-                continue
-            end
-        elseif task(n) == "ASST-G"|| task(n) == "ASSTG"
-            try
-                % load perf struct for specific task
-                load(perf_all.ASSTG.perf_dirs(i), 'perf')
-            catch
-                fprintf('%s: Perf.mat does not exist\n', perf_all.subs{i})
-                continue
-            end
-            try
-                % create indices if not already there
-                %%%% temporary solution
-                perf.resp_mat.is_last_cor    = perf.resp_mat.cons_corr == 8;
-                % shifting it out by one to get shifts
-                perf.resp_mat.is_shift = [false; perf.resp_mat.is_last_cor(1:end-1,:)];
-                perf.resp_mat.is_practice = perf.resp_mat.stage_num == 1;
-                perf.resp_mat.is_first_cor = perf.resp_mat.cons_corr == 1;
-                perf.resp_mat.is_second_cor = perf.resp_mat.cons_corr == 2;
-
-                % all RTs
-                x = perf.resp_mat.RT( ~ perf.resp_mat.is_practice,:);
-
-                perf.RT.median_all = median(x, 'omitnan');
-                %perf.RT.median_all = plot_his_RTs(task(n), perf_all.subs{i}, x, 'all RTs');
-
-                % separated by shift or no shift
-                x1 = perf.resp_mat.RT(~perf.resp_mat.is_shift,:);
-                x2 = perf.resp_mat.RT(perf.resp_mat.is_shift,:);
-
-                perf.RT.median_repeat = median(x1, 'omitnan');
-                perf.RT.median_shift  = median(x2, 'omitnan');
-
-                %[perf.RT.median_repeat, perf.RT.median_shift] = plot_his_RTs(task(n), perf_all.subs{i}, x1, 'repeat', x2,  'shift');
-
-                % first correct vs second correct
-                x1 = perf.resp_mat.RT(perf.resp_mat.is_second_cor,:);
-                x2 = perf.resp_mat.RT(perf.resp_mat.is_first_cor,:);
-
-                perf.RT.median_second = median(x1, 'omitnan');
-                perf.RT.median_first  = median(x2, 'omitnan');
-
-                %[perf.RT.median_second, perf.RT.median_first] = plot_his_RTs(task(n), perf_all.subs{i}, x1, 'Second correct', x2,  'First Correct');
-
-                % first correct vs second correct
-                x1 = perf.resp_mat.RT(perf.resp_mat.is_last_cor,:);
-                x2 = perf.resp_mat.RT(perf.resp_mat.is_first_cor,:);
-
-                perf.RT.median_last = median(x1, 'omitnan');
-                %perf.RT.median_last = plot_his_RTs(task(n), perf_all.subs{i}, x1, 'Last correct', x2,  'First Correct');
-
-                save(sprintf('%s%s/%s_task-%s_perf.mat', dirs.derived_dt_dir, perf_all.subs{i}, perf_all.subs{i}, task(n)), 'perf')
-
-            catch
-                fprintf('%s: An error occured during graph generation of RTs\n', perf_all.subs{i})
-                continue
-            end
-
-            try
-                % saving new parameters in perf_all
-                perf_all.ASSTG.RT.median_all(i,1)    = perf.RT.median_all;
-                perf_all.ASSTG.RT.median_repeat(i,1) = perf.RT.median_repeat;
-                perf_all.ASSTG.RT.median_shift(i,1)  = perf.RT.median_shift;
-                perf_all.ASSTG.RT.median_first(i,1)  = perf.RT.median_first;
-                perf_all.ASSTG.RT.median_second(i,1) = perf.RT.median_second;
-                perf_all.ASSTG.RT.median_last(i,1)   = perf.RT.median_last;
-
-                % Error rates
-                perf.error.error_all = 1 - (sum(perf.resp_mat.correct)/perf.all_trials);
-                perf.error.error_in_stage = nan(1, height(perf.stage_str));
-                perf.error.trials_to_criterion  = nan(1, height(perf.stage_str));
-                for k = 1: height(perf.stage_str)
-                    ind = perf.resp_mat.stage_num == k;
-                    x = perf.resp_mat(ind,:);
-                    perf.error.error_in_stage(k) = 1 - (sum(x.correct)/height(x));
-                    perf.error.trials_to_criterion(k)  = height(x);
-                end
-
-                % saving new parameters in perf_all
-                perf_all.ASSTG.error.error_all(i,1)            = perf.error.error_all;
-                perf_all.ASSTG.error.error_in_stage(i, :)      = perf.error.error_in_stage;
-                perf_all.ASSTG.error.trials_to_criterion(i, :) = perf.error.trials_to_criterion;
 
                 save(sprintf('%s%s/%s_task-%s_perf.mat', dirs.derived_dt_dir, perf_all.subs{i}, perf_all.subs{i}, task(n)), 'perf')
 
