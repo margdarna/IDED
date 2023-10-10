@@ -1,5 +1,7 @@
 function [freq] = ft_freqbaseline_from_avg(cfg, freq, freq_avg)
-
+% modified from: ft_freqbaseline to extract baseline from participant average across all conditions
+% all copyrights and rights belong to fieldtrip
+%
 % FT_FREQBASELINE performs baseline normalization for time-frequency data
 %
 % Use as
