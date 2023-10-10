@@ -1,8 +1,11 @@
+
+# load libraries
 library(tidyverse)
 library(ggpubr)
 library(rstatix)
-#setwd("C:/Users/mdarna/Documents/PhD/A05-SFB1436/Output/4_Stats")
-setwd("C:/Users/mdarna/Documents/PhD/A05-SFB1436/IDED_v1_Analysis/Output/repeat2_ascontrol/4_Stats")
+
+# set directories
+setwd("your_directory")
 
 # P300 analysis - latency
 # I loaded the data by just finding them in their folder
@@ -56,6 +59,9 @@ res.aov <- anova_test(
 )
 get_anova_table(res.aov)
 
+#########################
+# pairwise tests
+#########################
 pwc <- data %>%
   pairwise_t_test(dv ~between, p.adjust.method = "bonferroni", paired = FALSE)
 pwc
@@ -70,9 +76,11 @@ pwc <- data %>%
   pairwise_t_test(dv ~between, p.adjust.method = "bonferroni", paired = FALSE)
 pwc
 
+#####################################
+# Plotting
+####################################
 # adding source functions for plotting
 source("D:/Plot_functions.R")
-
 
 dat_stat <- summarySEwithin(data, measurevar="dv", betweenvars="between", withinvars="within")
 dat_stat
