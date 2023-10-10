@@ -1,4 +1,10 @@
 function create_R_matrix(component_name, analysis, subj_info, dirs)
+% create R matrix for variable
+% component_name: component name as character vector, e.g. 'P300'
+% analysis: type of analysis to be performed as character vector, e.g. 'ERP' or 'TFR'
+% subj_info: subj_info array, as created in original scripts.
+% dirs: struc with experiment directories as generated in original scripts.
+
 % load mat file of that component
 load(strcat(dirs.output_dir, '4_Stats\stats_', analysis, '_', component_name, '.mat'), "component_avg")
 
