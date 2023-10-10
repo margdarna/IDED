@@ -355,6 +355,9 @@ figure; ft_multiplotER(cfg, ERP.grandavg_young, ERP.grandavg_old)
 
 % rertieving latencies from Latency calculation script
 % IDED_ERP_Analysis_Lateny.m
+%%
+% make sure to run the latency script here, if you are rerunning it for your own analyses
+%%
 load("ind_P300.mat")
 
 % P300 - P3b - parietal
