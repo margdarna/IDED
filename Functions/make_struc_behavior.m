@@ -42,7 +42,7 @@ if strcmp(task, "IDED")
     catch
         fprintf('%s: is_break not found in all_var.mat', subj);
     end
-elseif strcmp(task, "ASST-D") || strcmp(task, "ASSTD")|| strcmp(task, "ASST") || strcmp(task, "ASST-G") || strcmp(task, "ASST-Gabor")|| strcmp(task, "ASSTG")
+elseif strcmp(task, "ASST-D") || strcmp(task, "ASSTD")|| strcmp(task, "ASST")
     perf.all_trials = trial - 1;
     perf.trial_decomposition = [8 perf.all_trials-8]; % predetermined: practice trials = 8
     %perf.trial_str = trial_str(1:perf.all_trials,:); 
@@ -69,7 +69,7 @@ if strcmp(task, "IDED")
         elseif t_size(2) == 3
             perf.t_mat.Properties.VariableNames = {'cross', 'stim', 'press'};
         end
-elseif strcmp(task, "ASST-D") || strcmp(task, "ASSTD")|| strcmp(task, "ASST") || strcmp(task, "ASST-G") || strcmp(task, "ASST-Gabor")|| strcmp(task, "ASSTG")
+elseif strcmp(task, "ASST-D") || strcmp(task, "ASSTD")|| strcmp(task, "ASST")
     % resp_mat:       
         % naming table columns
         perf.resp_mat.Properties.VariableNames = {'trial', 'stage_num', 'targ_pos','response','RT', 'cons_corr'};
