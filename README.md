@@ -20,6 +20,9 @@ For EEG analysis:
 For statistics:
 - [RStudio](https://posit.co/download/rstudio-desktop/) (R version 4.2.2)
 
+For plots in MATLAB:
+- [Gramm Complete Data Visualization Toolbox](https://de.mathworks.com/matlabcentral/fileexchange/54465-gramm-complete-data-visualization-toolbox-ggplot2-r-like)
+
 ## Movies:
 The folder movie includes GIFs of theta power for each condition of the paradigm and each age group.
 
