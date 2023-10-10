@@ -1,8 +1,10 @@
+# Load libraries
 library(tidyverse)
 library(ggpubr)
 library(rstatix)
-#setwd("C:/Users/mdarna/Documents/PhD/A05-SFB1436/Output/4_Stats")
-setwd("C:/Users/mdarna/Documents/PhD/A05-SFB1436/IDED_v1_Analysis/Output/repeat2_ascontrol/4_Stats")
+
+# set working directory
+setwd("your_directory")
 
 # P300 amplitude analysis
 # I loaded the data by just finding them in their folder
@@ -49,7 +51,9 @@ data %>%
 # check homogeneit< of covariances, we want the p value to be higher than 0.05
 box_m(data[, "dv", drop = FALSE], data$within)
 
+##############################
 # Two-way mixed ANOVA test
+##############################
 res.aov <- anova_test(
   data = data, dv = dv, wid = subj_num,
   between = between, within = c(within), effect.size = "pes"
@@ -68,8 +72,9 @@ d <- data %>%
   cohens_d(dv ~ within, paired = TRUE)
 d
 
-
+#############################
 # illustration of the results
+#############################
 # only boxplots
 ggline(data, x = "within", y = "dv", color = "between", fill = "between",
          add = c("dotplot", "mean_ci"), add.params = list(dotsize = 0.5, fill = "between"), 
