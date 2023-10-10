@@ -1,9 +1,10 @@
+# Load libraries
 library(tidyverse)
 library(ggpubr)
 library(rstatix)
 
-#setwd("C:/Users/mdarna/Documents/PhD/A05-SFB1436/Output/6_Single_Trial_Analysis")
-setwd("C:/Users/mdarna/Documents/PhD/A05-SFB1436/IDED_v1_Analysis/Output/repeat2_ascontrol/6_Single_Trial_Analysis")
+# Set working directories
+setwd("your_directory)
 
 # Single Trial analysis
 # I loaded the data by just finding them in their folder
@@ -38,7 +39,9 @@ data %>%
 # check homogeneit< of covariances, we want the p value to be higher than 0.05
 box_m(data[, "dv", drop = FALSE], data$within)
 
-# Two-way mixed ANOVA test to assess if we have effects
+############################
+# Two-way mixed ANOVA test 
+############################
 res.aov <- anova_test(
   data = data, dv = dv, wid = subj_num,
   between = between, within = c(within), effect.size = "pes"
@@ -56,14 +59,18 @@ data %>%
   group_by(between) %>%
   get_summary_stats(dv, type = "mean_sd")
 
+################################
 # illustration of the results
+################################
 # only boxplots
   ggline(data, x = "within", y = "dv", color = "between",fill = "between",
          add = c("dotplot", "mean_ci"), add.params = list(dotsize = 0.5, fill = "between"), 
          position = position_dodge(width = 0.4))+
     labs(x = "Condition", y = "Slope", color = "Age group")
-  
+
+################################################
 # one sample t-test per group per condition
+################################################
 
 t_young_repeat= t.test(data[data$between== "1" & data$within== "repeat", ]$dv, mu = 0)
 t_young_repeat
@@ -83,8 +90,7 @@ t_old_ID
 t_old_ED= t.test(data[data$between== "0" & data$within== "  ED  ", ]$dv, mu = 0)
 t_old_ED
 
-
-# perform holm correction on the values
+# perform fdr correction on the values
 # generate data frame with p values
 library(fuzzySim)
 pvalues <- data.frame(var = c("young_repeat", "young_ID", "young_ED", 
@@ -93,8 +99,6 @@ pvalues <- data.frame(var = c("young_repeat", "young_ID", "young_ED",
                                t_young_ED$p.value, t_old_repeat$p.value, 
                                t_old_ID$p.value, t_old_ED$p.value))
 FDR(pvalues = pvalues, correction = "fdr")
-#FDR(pvalues = pvalues, correction = "holm")
-# different result if we use holm correction, which is more conservative
 
 # calculating cohens d for significant effects
 data[data$between== "1" & data$within== "  ID  ", ] %>%
@@ -104,12 +108,9 @@ data[data$between== "1" & data$within== "  ED  ", ] %>%
 data[data$between== "0" & data$within== "  ED  ", ] %>%
   cohens_d(dv ~ 1, mu = 0)
 
+#############################
 # show results in boxplot
-#bxp <- ggboxplot(data_alltrl, x = "between", y = "dv", ylab = "Transformed Correlation Coefficient", 
-#                 xlab = "Age Group", add = "dotplot", color = "between")
-#bxp
-
-
+############################
 dat_stat <- summarySEwithin(data, measurevar="dv", betweenvars="between", withinvars="within")
 dat_stat
 
