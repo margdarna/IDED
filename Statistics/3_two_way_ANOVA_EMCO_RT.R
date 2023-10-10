@@ -4,7 +4,7 @@ library(ggpubr)
 library(rstatix)
 
 # set working directory
-setwd("//linstore01/home/mdarna/PhD/A05-SFB1436/IDED_v1_Analysis/Output/4_Stats")
+setwd("your_directory")
 
 # Reaction time ana
 # I loaded the data by just finding them in their folder
@@ -87,9 +87,9 @@ d_between
 
 
 
-
-
+#####################################
 # investigating trend for interaction
+#####################################
 pwc_within <- data %>%
   group_by(between)%>%
   pairwise_t_test(dv ~ within, p.adjust.method = "holm", paired = TRUE)
@@ -131,14 +131,16 @@ d_between
 
 
 
-
+########################################
 ## Perform robust ANOVA
+########################################
 # getting library
 library(WRS2)
 bwtrim(dv ~ between*within, id = subj_num, data = data)
 
-
+#################################################
 # Perform post-hoc comparisons on the main effects:
+####################################################
 # test the within effect using a bootstrap based approach for one-step M estimators
 set.seed(123)
 sppbb(dv ~ between*within, id = subj_num, data = data)
@@ -160,7 +162,10 @@ sppba(dv ~ between*within, id = subj_num , data = data)
 # get effect size using robust cohen.s d
 akp.effect(dv ~ between, data = data)
 
+###############################################
 # illustration of the results
+###############################################
+
 # only boxplots
 ggline(data, x = "within", y = "dv", color = "between",
          add = c("dotplot", "mean_ci"), add.params = list(dotsize = 0.5), 
