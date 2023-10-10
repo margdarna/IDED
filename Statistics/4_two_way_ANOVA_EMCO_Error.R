@@ -1,10 +1,14 @@
+# load required libraries
 library(tidyverse)
 library(ggpubr)
 library(rstatix)
-#setwd("C:/Users/mdarna/Documents/PhD/A05-SFB1436/Output/4_Stats")
-setwd("C:/Users/mdarna/Documents/PhD/A05-SFB1436/IDED_v1_Analysis/Output/repeat2_ascontrol/4_Stats")
 
+# set directories
+setwd("your_directory")
+
+######################
 # Error analysis
+######################
 # I loaded the data by just finding them in their folder
 data <- read.table("stat_error_repeat2_ID_ED.csv", sep = ',', header = TRUE)
 #turn to factors
@@ -18,7 +22,6 @@ data %>%
 
 data %>%
   get_summary_stats(dv, type = "mean_sd")
-
 
 # show boxplot
 bxp <- ggboxplot(
@@ -77,7 +80,10 @@ d <- data %>%
   cohens_d(dv ~ within, paired = TRUE)
 d
 
+################################################
 # Two-way mixed robust ANOVA test
+###############################################
+
 # getting library
 library(WRS2)
 bwtrim(dv ~ between*within, id = subj_num, data = data)
@@ -108,8 +114,8 @@ dep.effect(IDData, EDData)
   source("D:/Plot_functions.R")
 
   
-  dat_stat <- summarySEwithin(data, measurevar="dv", betweenvars="between", withinvars="within")
-  dat_stat
+dat_stat <- summarySEwithin(data, measurevar="dv", betweenvars="between", withinvars="within")
+dat_stat
   
 pd <- position_dodge(0.4) # move them .25 to the left and right
 error_plot =ggplot(dat_stat, aes(x=within, y=dv*100, colour=between)) + 
