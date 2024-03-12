@@ -6,17 +6,17 @@
 %
 % Written by: Margarita Darna
 % Created on: 03. August 2022
-% Last modified on: 01. September 2023
+% Last modified on: 23. November 2022
 
-%%
-%----------------------------------------------------------------------
+%% --------------------------------------------------------------------
 %               0 - Prepare workspace and directories
 %----------------------------------------------------------------------
 clear;clc;
+
 % Setting up needed directories
 dirs = {};
-% change project_dir accordingly
-dirs.proj_dir = 'C:/your_project_directory/';  
+%dirs.proj_dir = 'C:\Users\mdarna\Documents\PhD\A05-SFB1436\';
+dirs.proj_dir       = '//linstore01/home/mdarna/PhD/A05-SFB1436/';
 dirs.dt_dir         = strcat (dirs.proj_dir, 'Data/');
 dirs.exp_dir        = strcat (dirs.proj_dir, 'IDED_v1_Analysis/');
 dirs.raw_dt_dir     = strcat(dirs.dt_dir, 'Raw_data/');
@@ -31,24 +31,28 @@ addpath(genpath(dirs.analysis_dir));
 % making sure that fieldtrip is called correctly
 ft_defaults
 
-% define the subjects
 % big epochs for the purpose of time frequency analysis
-prestim = 1.25;
-poststim = 3;
+prestim = 1.25; % in seconds
+poststim = 3;   % in seconds
 
-%%
-%----------------------------------------------------------------------
+%% --------------------------------------------------------------------
 %            Load excel table with Subject Information
 %----------------------------------------------------------------------
-subj_info = readtable(strcat(dirs.analysis_dir, 'Protocol.xlsx'));
+subj_info = readtable(strcat(dirs.exp_dir, 'Protocol.xlsx'));
 subj_info = subj_info(subj_info.Excluded== 0,:);
 subs      = subj_info.Pseudonym;
 age_group = subj_info.age_cohort;
 is_young  = categorical(age_group) == 'young';
 subj_young = subs(is_young);
 subj_old = subs(~is_young);
-age= subj_info.age;
-gender = subj_info.Gender;
+
+dem_info =  readtable(strcat(dirs.raw_dt_dir, 'Demographics.xlsx'));
+% arrange the age in the order of subjects
+for i = 1:numel(subs)
+    subj = subs{i};
+    age(i) = dem_info.Age(strcmp(dem_info.Pseudonym,subj), :);
+    gender(i) = dem_info.Gender(strcmp(dem_info.Pseudonym,subj), :);
+end
 
 % Calculate average age for each age group
 tblstats = grpstats(subj_info(:,2:3),"age_cohort", ["mean" "std"]);
@@ -56,8 +60,7 @@ tblstats = grpstats(subj_info(:,2:3),"age_cohort", ["mean" "std"]);
 [GC_young,GR_young] = groupcounts(subj_info(is_young,:).Gender);
 [GC_old,GR_old] = groupcounts(subj_info(~is_young,:).Gender);
 
-%%
-%----------------------------------------------------------------------
+%% --------------------------------------------------------------------
 %            1 - Load single subject EEG and prepare epochs
 %----------------------------------------------------------------------
 
@@ -94,7 +97,7 @@ data_eeg = ft_preprocessing(cfg);
 % Break start:               50  + number of break
 % Break end:                 60  + number of break
 
-% extract epochs, stimulus locked
+% extract stimulus locked epochs
 % here we are using a custom function that also rejects trials with
 % artifacts and extracts trial number
 cfg = [];
@@ -116,10 +119,9 @@ if strcmp(subj, 'S023')
 end
 
 % create datasets
-% stimulus locked
 data_stimpres   = ft_redefinetrial(cfg_stimpres, data_eeg);
 
-% remove baseline from stimulus locked trials
+% remove baseline
 cfg = [];
 cfg.demean          = 'yes';
 cfg.baselinewindow  = [-0.25 0];
@@ -140,8 +142,7 @@ fprintf(strcat(subj, ' succesfully saved!\n\n'))
 end
 clear data_eeg data_stimpres data_TFR cfg_stimpres
 
-%% 
-%----------------------------------------------------------------------
+%% --------------------------------------------------------------------
 %            2 - Calculate subject averages for each condition
 %----------------------------------------------------------------------
 for i = 1:height(subs)
@@ -262,10 +263,10 @@ clear repeat1_TFR repeat2_TFR shift_TFR last_TFR ID_TFR ED_TFR  alltrl_TFR repea
 
 fprintf(strcat('Subject', subj, ' succesful!\n\n'));
 end
-%% 
-%----------------------------------------------------------------------
+%% ---------------------------------------------------------------------
 %            3 - Generate struct array to save all subject averages
 %----------------------------------------------------------------------
+% combine all subjects together
 for i = 1:height(subs)
     subj = subs{i};
     load(strcat(dirs.output_dir, '2_Subj_Avg\', subj, '_subj_avg_stimpres_TFR.mat'))
@@ -319,8 +320,7 @@ save(strcat(dirs.output_dir, '2_Subj_Avg\old_subj_avg_stimpres_TFR'), "old_repea
 clear all_repeat1_stimpres_TFR all_repeat2_stimpres_TFR all_shift_stimpres_TFR all_ID_stimpres_TFR all_ED_stimpres_TFR ...
     all_alltrl_stimpres_TFR all_last_stimpres_TFR all_alltrl_stimpres_TFR_no_norm 
 
-%%
-%----------------------------------------------------------------------
+%% ---------------------------------------------------------------------
 %            4 - Calculate grand average TFR for each condition
 %---------------------------------------------------------------------- 
 % TFR
@@ -362,8 +362,7 @@ TFR.grandavg_alltrl_no_norm_old   = ft_freqgrandaverage(cfg, old_alltrl_stimpres
 %
 save(strcat(dirs.output_dir, '3_Grandavg\grandavg_TFR_stimpres.mat'),"TFR", '-v7.3');
 
-%%
-%----------------------------------------------------------------------
+%% --------------------------------------------------------------------
 %            5 - Collect average power for specific frequencies
 %---------------------------------------------------------------------- 
 
@@ -372,8 +371,6 @@ load(strcat(dirs.output_dir, '3_Grandavg\grandavg_TFR_stimpres.mat'));
 
 % define cfg
 cfg = [];
-%cfg.baseline     = [-0.30 -0.25];
-%cfg.baselinetype = 'absolute';
 cfg.xlim         = [-0.25 1.5];
 cfg.showlabels   = 'yes';
 cfg.layout       = 'acticap-64ch-standard2-EMCO.mat';
@@ -396,39 +393,31 @@ figure; ft_topoplotTFR(cfg,TFR.grandavg);
 theta_power_fr       = mean(squeeze(mean(TFR.grandavg.powspctrm(:, 11, 4:8, :))));
 theta_power_young_fr = mean(squeeze(mean(TFR.grandavg_young.powspctrm(:, 11, 4:8, :))));
 theta_power_old_fr   = mean(squeeze(mean(TFR.grandavg_old.powspctrm(:, 11, 4:8, :))));
-% calculate average theta power for young and old on the FCz channel to see
-% if we have a differnt timeline
-theta_power_p       = mean(squeeze(mean(TFR.grandavg.powspctrm(:, 63, 4:8, :))));
-theta_power_young_p = mean(squeeze(mean(TFR.grandavg_young.powspctrm(:, 63, 4:8, :))));
-theta_power_old_p   = mean(squeeze(mean(TFR.grandavg_old.powspctrm(:, 63, 4:8, :))));
+
+figure();
+plot(TFR.grandavg.time, theta_power_fr);
+xlim([-0.25 2]);
+ylim([0 4]);
 
 figure()
-plot(TFR.grandavg.time, theta_power_fr)
+plot(TFR.grandavg.time, theta_power_young_fr);
 xlim([-0.25 2]);
 ylim([0 4]);
-hold on
-plot(TFR.grandavg.time, theta_power_p)
-figure()
-plot(TFR.grandavg.time, theta_power_young_fr)
-hold on
-plot(TFR.grandavg.time, theta_power_young_p)
-xlim([-0.25 2]);
-ylim([0 4]);
-figure()
-plot(TFR.grandavg.time, theta_power_old_fr)
-hold on
-plot(TFR.grandavg.time, theta_power_old_p)
+
+figure();
+plot(TFR.grandavg.time, theta_power_old_fr);
 xlim([-0.25 2]);
 ylim([0 4]);
 
 % prepare cfg
 cfg = [];
-cfg.channel     = {'F1', 'F2', 'Fz', 'FC1', 'FC2', 'FCz'}; % {'Fz'};
+cfg.channel     = {'F1', 'F2', 'Fz', 'FC1', 'FC2', 'FCz'};
 cfg.avgoverchan = 'yes';
 cfg.latency     =  [0.25 0.50];
 cfg.avgovertime = 'yes';
 cfg.frequency   =  [4 8];
 cfg.avgoverfreq =  'yes';
+
 % young
 for i = 1:numel(young_repeat1_stimpres_TFR)
 fprintf('************************\n%s\n************************\n', subj_young{i});
@@ -440,6 +429,7 @@ young_ED_stimpres{i} = ft_selectdata(cfg, young_ED_stimpres_TFR{i});
 young_last_stimpres{i} = ft_selectdata(cfg, young_last_stimpres_TFR{i});
 young_alltrl_stimpres{i} = ft_selectdata(cfg, young_alltrl_stimpres_TFR{i});
 end
+
 % old
 for i = 1:numel(old_repeat1_stimpres_TFR)
 fprintf('************************\n%s\n************************\n', subj_old{i});
@@ -482,8 +472,7 @@ save(strcat(dirs.output_dir, '4_Stats\stats_TFR_theta250.mat'), "young_repeat1_s
     "young_ID_stimpres", "young_ED_stimpres", "young_last_stimpres", "young_alltrl_stimpres", "old_repeat1_stimpres", "old_repeat2_stimpres", ...
     "old_shift_stimpres", "old_ID_stimpres", "old_ED_stimpres", "old_last_stimpres", "old_alltrl_stimpres","theta250");
 
-%%
-%----------------------------------------------------------------------
+%% --------------------------------------------------------------------
 %            6 - Generate matrix for ANOVA in RStudio
 %---------------------------------------------------------------------- 
 % load variables
@@ -492,13 +481,13 @@ load(strcat(dirs.output_dir, '4_Stats\stats_TFR_theta250.mat'), "theta250")
 % Theta 250 to 500 ms
 % generate matrix for ANOVA
 % depending variable
-% dv = [theta250.young_repeat1.powspctrm; theta250.old_repeat1.powspctrm; theta250.young_ID.powspctrm; ...
-%     theta250.old_ID.powspctrm; theta250.young_ED.powspctrm; theta250.old_ED.powspctrm];
 
 dv = [theta250.young_repeat2.powspctrm; theta250.old_repeat2.powspctrm; theta250.young_ID.powspctrm; ...
     theta250.old_ID.powspctrm; theta250.young_ED.powspctrm; theta250.old_ED.powspctrm];
+
 % subject number
 subj_num = [1:numel(subs) 1:numel(subs) 1:numel(subs)]';
+
 % generate table
 X = [dv subj_num];
 T = array2table(X);
@@ -532,8 +521,9 @@ T.gender =  [gender(is_young)' - 1; gender(~is_young)' - 1];
 % save table as csv
 writetable(T, strcat(dirs.output_dir, '4_Stats\stat_TFR_theta250_alltrl.csv'));
 
-%% 6 - Plot results
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% --------------------------------------------------------------------
+%                    6 - Plot results
+% ---------------------------------------------------------------------
 % load grandaverages
 load(strcat(dirs.output_dir, '3_Grandavg\grandavg_TFR_stimpres.mat'));
 
@@ -612,7 +602,9 @@ figure; ft_topoplotTFR(cfg,TFR.grandavg_repeat2_old);
 figure; ft_topoplotTFR(cfg,TFR.grandavg_ID_old);
 figure; ft_topoplotTFR(cfg,TFR.grandavg_ED_old);
 
-%% Create movie for presentations
+%% --------------------------------------------------------------------
+%                   6 - Create movies
+% ---------------------------------------------------------------------
 
 % load grandaverages
 load(strcat(dirs.output_dir, '3_Grandavg\grandavg_TFR_stimpres.mat'));
@@ -656,3 +648,117 @@ saveas(gcf, sprintf('%s8_movies/Theta_topo_old_ED_%i.png', dirs.output_dir, k));
 
 k = k + 1;
 end
+
+%% --------------------------------------------------------------------
+%     7 - Calculate difference for correlation with difference waves
+% ---------------------------------------------------------------------
+% load dataset
+load(strcat(dirs.output_dir, '3_Grandavg\grandavg_TFR_stimpres.mat'));
+
+% Calculate the difference wave
+cfg           = [];
+cfg.operation = 'x2-x1';
+cfg.parameter = 'powspctrm';
+
+ID_repeat_difference_young = ft_math(cfg, TFR.grandavg_repeat2_young, TFR.grandavg_ID_young);
+ED_repeat_difference_young = ft_math(cfg, TFR.grandavg_repeat2_young, TFR.grandavg_ED_young);
+
+ID_repeat_difference_old = ft_math(cfg, TFR.grandavg_repeat2_old, TFR.grandavg_ID_old);
+ED_repeat_difference_old = ft_math(cfg, TFR.grandavg_repeat2_old, TFR.grandavg_ED_old);
+
+% plot TFR
+cfg = [];
+cfg.layout = 'acticap-64ch-standard2-EMCO';
+cfg.interactive = 'yes';
+cfg.showoutline = 'yes';
+cfg.zlim       = [-3 3];
+cfg.xlim       = [-0.25 1];
+cfg.ylim       = [4 8];
+ft_multiplotTFR(cfg, ID_repeat_difference_young)
+ft_multiplotTFR(cfg, ED_repeat_difference_young)
+
+figure();
+ft_multiplotTFR(cfg, ID_repeat_difference_old)
+ft_multiplotTFR(cfg, ED_repeat_difference_old)
+
+% Extract the values for statistical analysis
+% theta250
+cfg = [];
+cfg.channel     = {'F1', 'F2', 'Fz', 'FC1', 'FC2', 'FCz'};
+cfg.latency     =  [0.25 0.5];
+cfg.frequency   =  [4 8];
+cfg.avgoverfreq = 'yes';
+cfg.avgoverchan = 'yes';
+cfg.avgovertime = 'yes';
+
+mean_ID_repeat_dif_young     = ft_selectdata(cfg, ID_repeat_difference_young);
+mean_ED_repeat_dif_young     = ft_selectdata(cfg, ED_repeat_difference_young);
+mean_ID_repeat_dif_old       = ft_selectdata(cfg, ID_repeat_difference_old);
+mean_ED_repeat_dif_old       = ft_selectdata(cfg, ED_repeat_difference_old);
+
+% generate matrix for ANOVA
+% depending variable
+dv = [mean_ID_repeat_dif_young.powspctrm; mean_ID_repeat_dif_old.powspctrm; ...
+    mean_ED_repeat_dif_young.powspctrm; mean_ED_repeat_dif_old.powspctrm];
+% subject number
+subj_num = [1:numel(subs) 1:numel(subs)]';
+% generate table
+X = [dv subj_num];
+T = array2table(X);
+% Assign headings to the table
+T.Properties.VariableNames = {'dv', 'subj_num'};
+% add between and within variables
+T.between = [repmat('young', sum(is_young), 1); repmat(' old ', sum(~is_young), 1); repmat('young', sum(is_young), 1); ...
+    repmat(' old ', sum(~is_young), 1)];
+T.within = [repmat('ID-repeat', sum(is_young), 1); repmat('ID-repeat', sum(~is_young), 1);
+    repmat('ED-repeat', sum(is_young), 1); repmat('ED-repeat', sum(~is_young), 1)];
+T.gender =  [gender(is_young)' - 1; gender(~is_young)' - 1; gender(is_young)' - 1; gender(~is_young)' - 1];
+% save table as csv
+writetable(T, strcat(dirs.output_dir, '4_Stats\stat_TFR_theta250_shift-repeat.csv'));
+
+% plot difference of theta in midfrontal region
+cfg = [];
+cfg.channel     = {'F1', 'F2', 'Fz', 'FC1', 'FC2', 'FCz'};
+cfg.latency     =  [-0.25 1];
+cfg.frequency   =  [4 8];
+cfg.avgoverfreq = 'yes';
+cfg.avgoverchan = 'yes';
+
+theta250.grandavg_ID_repeat_dif_young     = ft_selectdata(cfg, ID_repeat_difference_young);
+theta250.grandavg_ED_repeat_dif_young     = ft_selectdata(cfg, ED_repeat_difference_young);
+theta250.grandavg_ID_repeat_dif_old       = ft_selectdata(cfg, ID_repeat_difference_old);
+theta250.grandavg_ED_repeat_dif_old       = ft_selectdata(cfg, ED_repeat_difference_old);
+
+% collect everything together to make plotting easier
+theta250_young = squeeze([theta250.grandavg_ID_repeat_dif_young.powspctrm; theta250.grandavg_ED_repeat_dif_young.powspctrm]);
+theta250_old = squeeze([theta250.grandavg_ID_repeat_dif_old.powspctrm; theta250.grandavg_ED_repeat_dif_old.powspctrm]);
+
+% young
+within_val={'ID - repeat' 'ED - repeat'};
+ind = [repmat(1, sum(is_young), 1); repmat(2, sum(is_young), 1)];
+within = within_val(ind);
+
+figure()
+g = gramm('x', theta250.grandavg_ID_repeat_dif_young.time*1000, 'y', theta250_young, 'linestyle', within, 'lightness', within);
+g.geom_polygon('x',{[250 500 500 250]}, 'y', {[-0.5 -0.5 2.5 2.5]}, 'alpha', 0.1)
+g.stat_summary('type', 'ci'); % plot with 95% confidence interval
+g.set_title(sprintf('Theta (4-8 Hz) young\n(F1, F2, Fz, FC1, FC2, FCz)'));
+g.set_names('color','Condition','x','Time (ms)','y','Power (dB)', 'linestyle', 'Condition', 'lightness','Condition');
+g.axe_property('XLim',[-250 1000],'YLim',[-0.5 2.5]);
+g.set_color_options('lightness_range',[80 30], 'legend','merge');
+g.set_order_options('linestyle',0, 'lightness', 0);
+g.draw();
+
+% old
+ind = [repmat(1, sum(~is_young), 1); repmat(2, sum(~is_young), 1)];
+within = within_val(ind);
+figure()
+g = gramm('x', theta250.grandavg_ID_repeat_dif_old.time*1000, 'y', theta250_old, 'linestyle', within, 'lightness', within);
+g.geom_polygon('x',{[250 500 500 250]}, 'y', {[-0.5 -0.5 2.5 2.5]}, 'alpha', 0.1)
+g.stat_summary('type', 'ci'); % plot with 95% confidence interval
+g.set_title(sprintf('Theta (4-8 Hz) old\n(F1, F2, Fz, FC1, FC2, FCz)'));
+g.set_names('color','Condition','x','Time (ms)','y','Power (dB)', 'linestyle', 'Condition', 'lightness','Condition');
+g.axe_property('XLim',[-250 1000],'YLim',[-0.5 2.5]);
+g.set_color_options('lightness_range',[80 30],'hue_range',[175 175], 'legend','merge');
+g.set_order_options('linestyle',0, 'lightness', 0);
+g.draw();
