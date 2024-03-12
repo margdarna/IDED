@@ -6,22 +6,21 @@
 % Created by: Margarita Darna
 % margarita.darna@lin-magdeburg.de
 
-%----------------------------------------------------------------------
+%% --------------------------------------------------------------------
 %               0 - Prepare workspace and directories
 %----------------------------------------------------------------------
-
 % Cleaning workspace and command window
 clear; clc;
 
 % Setting up needed directories
 dirs = {};
-% change project_dir accordingly
-dirs.proj_dir = 'C:/your_project_directory/';   
+%dirs.proj_dir = 'C:\Users\mdarna\Documents\PhD\A05-SFB1436\';    
+dirs.proj_dir       = '//linstore01/home/mdarna/PhD/A05-SFB1436/';    
 dirs.dt_dir         = strcat (dirs.proj_dir, 'Data/');
 dirs.exp_dir        = strcat (dirs.proj_dir, 'IDED_v1_Analysis/');
 dirs.raw_dt_dir     = strcat(dirs.dt_dir, 'Raw_data/');
 dirs.derived_dt_dir = strcat(dirs.exp_dir, 'Data/Derived_data/');
-dirs.analysis_dir   = strcat(dirs.exp_dir, 'Functions/');
+dirs.analysis_dir   = strcat(dirs.exp_dir, 'Analysis/');
 dirs.output_dir     = strcat(dirs.exp_dir, 'Output/');
 dirs.prepr_dir      = strcat(dirs.output_dir, '1_Preprocessing/');
 
@@ -46,9 +45,8 @@ tblstats = grpstats(subj_info(:,2:3),"age_cohort", ["mean" "std"]);
 [GC_young,GR_young] = groupcounts(subj_info(is_young,:).Gender);
 [GC_old,GR_old] = groupcounts(subj_info(~is_young,:).Gender);
 
-%%
-%----------------------------------------------------------------------
-%   1 - Load reaction times and frequency power for each participant
+%% --------------------------------------------------------------------
+%    1 - Load reaction times and frequency power for each participant
 %----------------------------------------------------------------------
 
 for i = 1:height(subs)
@@ -64,7 +62,7 @@ for i = 1:height(subs)
     % load frequency power of specific subject to retrieve theta power
     load(sprintf('%s2_Subj_Avg/%s_subj_avg_stimpres_TFR_trial.mat', dirs.output_dir, subj))
 
-    %%theta%%
+    % theta
     % averaging over frontal theta, but keeping trials
     cfg = [];
     cfg.channel     = {'F1', 'F2', 'Fz', 'FC1', 'FC2', 'FCz'};
@@ -151,7 +149,6 @@ for i = 1:height(subs)
     %outlier_repeat2 = o1;
     % calculate Fisher's z
     z_repeat2(i) = 0.5 * log((1 + Pi) / (1 - Pi));
-    
     % ID
     [Pi, p, ~] = Shepherd(theta_ID, RT_ID);
     % save information in array
@@ -188,9 +185,8 @@ save(strcat(dirs.output_dir, '6_Single_Trial_Analysis\IDED_theta250_single_trial
     "Pi_repeat1", "Pi_repeat2", "Pi_ID", "Pi_ED" , "Pi_last", "p_alltrl", "p_repeat1", "p_repeat2", "p_ID", ...
     "p_ED", "p_last", "z_alltrl", "z_repeat1", "z_repeat2", "z_ID", "z_ED", "z_last");
 
-%%
-%----------------------------------------------------------------------
-%                       2 - Generate matrix
+%% --------------------------------------------------------------------
+%             2 -  Extract tables in R
 %----------------------------------------------------------------------
 load(strcat(dirs.output_dir, '6_Single_Trial_Analysis\IDED_theta250_single_trial_shepherd.mat'))
 
@@ -216,3 +212,17 @@ T.within = [repmat('repeat', numel(subs), 1); repmat('  ID  ', numel(subs), 1); 
     repmat('  ED  ', numel(subs), 1)];
 % save table as csv
 writetable(T, strcat(dirs.output_dir, '6_Single_Trial_Analysis\IDED_theta250_single_trial_shepherd_repeat2_ID_ED.csv'));
+
+% all trials
+dv = z_alltrl';
+% subject number
+subj_num = [1:numel(subs)]';
+% generate table
+X = [dv subj_num];
+T = array2table(X);
+% Assign headings to the table
+T.Properties.VariableNames = {'dv', 'subj_num'};
+% add between and within variables
+T.is_young = is_young;
+% save table as csv
+writetable(T, strcat(dirs.output_dir, '6_Single_Trial_Analysis\IDED_theta250_single_trial_shepherd_alltrl.csv'));
