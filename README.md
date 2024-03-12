@@ -63,6 +63,8 @@ After pre-processing in [Brain Vision Analyzer](https://www.brainproducts.com/do
 Here is a brief description of the scripts:
 - [IDED_ERP_Analysis.m](https://github.com/margdarna/IDED/blob/main/IDED_ERP_Analysis.m): Creates epochs, calculates subject ERP averages per conditions, extracts P300 average as .csv, plots ERP
 - [IDED_ERP_Analysis_Latency.m](https://github.com/margdarna/IDED/blob/main/IDED_ERP_Analysis_Latency.m): Uses maximum peak method for latency calculation, extracts P300 latency as .csv
+- [IDED_difference_waves.m](https://github.com/margdarna/IDED/blob/main/IDED_difference_waves.m): Calculates difference waves and extracts latency of two components as .csv
+- [IDED_response_locked_trl.m](https://github.com/margdarna/IDED/blob/main/IDED_response_locked_trl.m): Calculates stimulus-locked ERP averages and extracts latency of two components as .csv
 - [IDED_TFR_Analysis.m](https://github.com/margdarna/IDED/blob/main/IDED_TFR_Analysis.m): creates epochs, calculates subject specific TFR, extracts theta power as .csv, plots results, creates movies
 - [IDED_single_trial_shepherd.m](https://github.com/margdarna/IDED/blob/main/IDED_single_trial_shepherd.m): perform shepherd's Pi correlation, extracts Fisher's z-values as .csv
 
