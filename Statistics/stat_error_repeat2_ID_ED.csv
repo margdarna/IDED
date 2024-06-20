@@ -1,0 +1,118 @@
+dv,subj_num,between,within,gender
+0.01,1,young,repeat,1
+0.02,2,young,repeat,1
+0,3,young,repeat,1
+0,4,young,repeat,0
+0,5,young,repeat,1
+0.01,6,young,repeat,1
+0,7,young,repeat,1
+0,8,young,repeat,1
+0,9,young,repeat,1
+0,10,young,repeat,1
+0,11,young,repeat,0
+0.01,12,young,repeat,0
+0.01,13,young,repeat,0
+0,14,young,repeat,1
+0.01,15,young,repeat,1
+0.01,16,young,repeat,0
+0,17,young,repeat,1
+0,18,young,repeat,1
+0,19,young,repeat,1
+0.01,20,young,repeat,1
+0,21, old ,repeat,1
+0,22, old ,repeat,1
+0,23, old ,repeat,1
+0,24, old ,repeat,1
+0.01,25, old ,repeat,1
+0.03,26, old ,repeat,1
+0.01,27, old ,repeat,0
+0,28, old ,repeat,1
+0.01,29, old ,repeat,1
+0,30, old ,repeat,1
+0,31, old ,repeat,1
+0.02,32, old ,repeat,0
+0.02,33, old ,repeat,0
+0,34, old ,repeat,1
+0.01,35, old ,repeat,1
+0.02,36, old ,repeat,0
+0.04,37, old ,repeat,0
+0.03,38, old ,repeat,0
+0,39, old ,repeat,1
+0.02,1,young,  ID  ,1
+0.0600000000000001,2,young,  ID  ,1
+0,3,young,  ID  ,1
+0,4,young,  ID  ,0
+0,5,young,  ID  ,1
+0.04,6,young,  ID  ,1
+0.04,7,young,  ID  ,1
+0,8,young,  ID  ,1
+0,9,young,  ID  ,1
+0.02,10,young,  ID  ,1
+0,11,young,  ID  ,0
+0.02,12,young,  ID  ,0
+0,13,young,  ID  ,0
+0,14,young,  ID  ,1
+0.04,15,young,  ID  ,1
+0,16,young,  ID  ,0
+0.02,17,young,  ID  ,1
+0,18,young,  ID  ,1
+0,19,young,  ID  ,1
+0.0600000000000001,20,young,  ID  ,1
+0.02,21, old ,  ID  ,1
+0,22, old ,  ID  ,1
+0.02,23, old ,  ID  ,1
+0,24, old ,  ID  ,1
+0,25, old ,  ID  ,1
+0,26, old ,  ID  ,1
+0.02,27, old ,  ID  ,0
+0,28, old ,  ID  ,1
+0.02,29, old ,  ID  ,1
+0.02,30, old ,  ID  ,1
+0,31, old ,  ID  ,1
+0.02,32, old ,  ID  ,0
+0.02,33, old ,  ID  ,0
+0.02,34, old ,  ID  ,1
+0.02,35, old ,  ID  ,1
+0.02,36, old ,  ID  ,0
+0.02,37, old ,  ID  ,0
+0.04,38, old ,  ID  ,0
+0,39, old ,  ID  ,1
+0.04,1,young,  ED  ,1
+0.04,2,young,  ED  ,1
+0.02,3,young,  ED  ,1
+0,4,young,  ED  ,0
+0.0600000000000001,5,young,  ED  ,1
+0,6,young,  ED  ,1
+0.1,7,young,  ED  ,1
+0,8,young,  ED  ,1
+0,9,young,  ED  ,1
+0.04,10,young,  ED  ,1
+0.02,11,young,  ED  ,0
+0.12,12,young,  ED  ,0
+0,13,young,  ED  ,0
+0.02,14,young,  ED  ,1
+0.04,15,young,  ED  ,1
+0.02,16,young,  ED  ,0
+0.08,17,young,  ED  ,1
+0,18,young,  ED  ,1
+0.02,19,young,  ED  ,1
+0.04,20,young,  ED  ,1
+0.04,21, old ,  ED  ,1
+0.02,22, old ,  ED  ,1
+0,23, old ,  ED  ,1
+0.02,24, old ,  ED  ,1
+0,25, old ,  ED  ,1
+0.14,26, old ,  ED  ,1
+0.02,27, old ,  ED  ,0
+0.02,28, old ,  ED  ,1
+0.02,29, old ,  ED  ,1
+0.02,30, old ,  ED  ,1
+0,31, old ,  ED  ,1
+0.08,32, old ,  ED  ,0
+0.1,33, old ,  ED  ,0
+0.04,34, old ,  ED  ,1
+0.04,35, old ,  ED  ,1
+0,36, old ,  ED  ,0
+0.02,37, old ,  ED  ,0
+0.0600000000000001,38, old ,  ED  ,0
+0.04,39, old ,  ED  ,1

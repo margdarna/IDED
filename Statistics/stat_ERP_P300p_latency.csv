@@ -1,0 +1,118 @@
+dv,subj_num,between,within
+0.34,1,young,repeat
+0.552,2,young,repeat
+0.422,3,young,repeat
+0.424,4,young,repeat
+0.456,5,young,repeat
+0.348,6,young,repeat
+0.51,7,young,repeat
+0.348,8,young,repeat
+0.48,9,young,repeat
+0.392,10,young,repeat
+0.386,11,young,repeat
+0.434,12,young,repeat
+0.426,13,young,repeat
+0.382,14,young,repeat
+0.41,15,young,repeat
+0.316,16,young,repeat
+0.47,17,young,repeat
+0.402,18,young,repeat
+0.43,19,young,repeat
+0.44,20,young,repeat
+0.456,21, old ,repeat
+0.53,22, old ,repeat
+0.58,23, old ,repeat
+0.486,24, old ,repeat
+0.48,25, old ,repeat
+0.588,26, old ,repeat
+0.468,27, old ,repeat
+0.402,28, old ,repeat
+0.546,29, old ,repeat
+0.47,30, old ,repeat
+0.474,31, old ,repeat
+0.492,32, old ,repeat
+0.55,33, old ,repeat
+0.482,34, old ,repeat
+0.502,35, old ,repeat
+0.574,36, old ,repeat
+0.508,37, old ,repeat
+0.47,38, old ,repeat
+0.528,39, old ,repeat
+0.31,1,young,  ID  
+0.602,2,young,  ID  
+0.386,3,young,  ID  
+0.484,4,young,  ID  
+0.474,5,young,  ID  
+0.48,6,young,  ID  
+0.482,7,young,  ID  
+0.354,8,young,  ID  
+0.448,9,young,  ID  
+0.45,10,young,  ID  
+0.432,11,young,  ID  
+0.494,12,young,  ID  
+0.516,13,young,  ID  
+0.382,14,young,  ID  
+0.388,15,young,  ID  
+0.338,16,young,  ID  
+0.484,17,young,  ID  
+0.45,18,young,  ID  
+0.516,19,young,  ID  
+0.452,20,young,  ID  
+0.488,21, old ,  ID  
+0.54,22, old ,  ID  
+0.602,23, old ,  ID  
+0.498,24, old ,  ID  
+0.466,25, old ,  ID  
+0.552,26, old ,  ID  
+0.512,27, old ,  ID  
+0.416,28, old ,  ID  
+0.592,29, old ,  ID  
+0.512,30, old ,  ID  
+0.464,31, old ,  ID  
+0.586,32, old ,  ID  
+0.518,33, old ,  ID  
+0.548,34, old ,  ID  
+0.492,35, old ,  ID  
+0.6,36, old ,  ID  
+0.59,37, old ,  ID  
+0.504,38, old ,  ID  
+0.51,39, old ,  ID  
+0.354,1,young,  ED  
+0.592,2,young,  ED  
+0.568,3,young,  ED  
+0.498,4,young,  ED  
+0.502,5,young,  ED  
+0.526,6,young,  ED  
+0.588,7,young,  ED  
+0.33,8,young,  ED  
+0.422,9,young,  ED  
+0.368,10,young,  ED  
+0.346,11,young,  ED  
+0.516,12,young,  ED  
+0.364,13,young,  ED  
+0.482,14,young,  ED  
+0.472,15,young,  ED  
+0.324,16,young,  ED  
+0.562,17,young,  ED  
+0.414,18,young,  ED  
+0.446,19,young,  ED  
+0.428,20,young,  ED  
+0.5,21, old ,  ED  
+0.574,22, old ,  ED  
+0.578,23, old ,  ED  
+0.486,24, old ,  ED  
+0.564,25, old ,  ED  
+0.492,26, old ,  ED  
+0.498,27, old ,  ED  
+0.434,28, old ,  ED  
+0.48,29, old ,  ED  
+0.48,30, old ,  ED  
+0.476,31, old ,  ED  
+0.54,32, old ,  ED  
+0.446,33, old ,  ED  
+0.588,34, old ,  ED  
+0.516,35, old ,  ED  
+0.54,36, old ,  ED  
+0.582,37, old ,  ED  
+0.47,38, old ,  ED  
+0.474,39, old ,  ED  
