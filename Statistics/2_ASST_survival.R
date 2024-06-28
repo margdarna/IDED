@@ -21,9 +21,10 @@ data_old = data[data$Age == 2,]
 fit_ASSTD <- survfit(Surv(ASSTD_surv, FAILED_ASSTD) ~ Age, data = data, conf.type = "log-log")
 summary(fit_ASSTD)
 
+survdiff(Surv(ASSTD_surv, FAILED_ASSTD) ~ Age, data = data)
+
+
 # plot results
 p = ggsurvplot(fit_ASSTD, data = data, conf.int = TRUE, xlab = "Stage number", title = "ASSTD",
            break.time.by = 1, xlim = c(0.5, 8.5))
 p
-
-survdiff(Surv(ASSTD_surv, FAILED_ASSTD) ~ Age, data = data)
