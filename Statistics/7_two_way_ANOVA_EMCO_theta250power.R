@@ -59,10 +59,6 @@ res.aov <- anova_test(
   between = between, within = c(within), effect.size = "pes"
 )
 get_anova_table(res.aov)
-# There is a significant between effect, within effect and an interaction
-# between, p < .001, pes = 0.325, F = 17.804
-# within, p = .002, pes = 0.150, F = 6.549
-# between:within, p < .001, pes = 0.268, F = 13.566
 
 # get summary stats
 data %>%
@@ -132,7 +128,7 @@ d
   theta_plot
   
   # save plot as pdf
-  setwd("//linstore01/home/mdarna/PhD/A05-SFB1436/IDED_v1_Analysis/Output/5_StatFigures")
+  setwd("your_directory")
   pdf("IDED_theta250_amplitude.pdf",         # File name
       width = 4, height = 3, # Width and height in inches
       bg = "white",    
