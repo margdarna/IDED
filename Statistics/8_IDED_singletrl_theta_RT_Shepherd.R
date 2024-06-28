@@ -47,7 +47,6 @@ res.aov <- anova_test(
   between = between, within = c(within), effect.size = "pes"
 )
 res.aov
-# there is a main effect of age group with p = 0.004 and pes=0.204
 
 # pairwise comparison for main effects
 pwc <- data %>%
@@ -133,7 +132,7 @@ singletrial_plot =ggplot(dat_stat, aes(x=within, y=dv, colour=between)) +
 singletrial_plot
 
 # save plot as pdf
-setwd("//linstore01/home/mdarna/PhD/A05-SFB1436/IDED_v1_Analysis/Output/5_StatFigures")
+setwd("your_directory")
 pdf("IDED_theta_single_trial_shepherd.pdf",         # File name
     width = 4, height = 3, # Width and height in inches
     bg = "white",    
