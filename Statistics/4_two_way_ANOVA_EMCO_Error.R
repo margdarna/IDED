@@ -36,9 +36,6 @@ data %>%
   identify_outliers(dv)
 # There is one extreme outlier, subj_num 26, for now they are not getting removed
 
-# remove outliers
-#data <- data[data$subj_num!=26,]
-
 # check if normally distributed, we want the p value to be higher than 0.05
 data %>%
   group_by(within, between) %>%
@@ -66,14 +63,11 @@ res.aov <- anova_test(
   between = between, within = c(within), effect.size = "pes"
 )
 get_anova_table(res.aov)
-# There is a significant within effect
-# within, p < .001, pes = 0.318, F = 17.273
 
 # main effects
 pwc <- data %>%
   pairwise_t_test(dv ~ within, p.adjust.method = "holm", paired = TRUE)
 pwc
-
 
 # get cohens d
 d <- data %>%
@@ -133,7 +127,7 @@ error_plot =ggplot(dat_stat, aes(x=within, y=dv*100, colour=between)) +
 error_plot
   
 # save plot as pdf
-setwd("//linstore01/home/mdarna/PhD/A05-SFB1436/IDED_v1_Analysis/Output/5_StatFigures")
+setwd(""your_directory"")
 pdf("IDED_error_repeat2_ID_ED.pdf",         # File name
     width = 4, height = 3, # Width and height in inches
       bg = "white",    
