@@ -62,10 +62,6 @@ res.aov <- anova_test(
 )
 res.aov
 get_anova_table(res.aov)
-# Main effect for:
-# between, p< .001, pes = 0.612, F = 58.300
-# within , p <.001, pes = 0.689, F = 81.942
-# between:within, p= 0.064, pes = 0.086, F = 3.48
 
 # pairwise comparisons for main effects
 pwc_within <- data %>%
@@ -85,8 +81,6 @@ d_between <- data %>%
   cohens_d(dv ~ between, paired = FALSE)
 d_between
 
-
-
 #####################################
 # investigating trend for interaction
 #####################################
@@ -105,7 +99,6 @@ data_long = data_wide %>% pivot_longer(cols=c('ID_repeat', 'ED_repeat', 'ED_ID')
                     names_to='condition_dif',
                     values_to='dv')
 
-# investigating trend for interaction
 # perform ANOVA
 res.aov <- anova_test(
   data = data_long, dv = dv, wid = subj_num,
@@ -128,7 +121,6 @@ d_between <- data_long %>%
   group_by(condition_dif) %>%
   cohens_d(dv ~ between, paired = FALSE)
 d_between
-
 
 
 ########################################
@@ -195,7 +187,7 @@ RT_plot =ggplot(dat_stat, aes(x=within, y=dv*1000, colour=between)) +
 RT_plot
 
 # save plot as pdf
-setwd("//linstore01/home/mdarna/PhD/A05-SFB1436/IDED_v1_Analysis/Output/5_StatFigures")
+setwd("your_directory")
 pdf("IDED_RT_repeat2_ID_ED.pdf",         # File name
     width = 4, height = 3, # Width and height in inches
     bg = "white",    
