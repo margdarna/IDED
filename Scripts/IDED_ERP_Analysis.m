@@ -15,10 +15,9 @@
 clear;clc;
 % Setting up needed directories
 dirs = {};
-%dirs.proj_dir = 'C:\Users\mdarna\Documents\PhD\A05-SFB1436\';
-dirs.proj_dir       = '//linstore01/home/mdarna/PhD/A05-SFB1436/';
+dirs.proj_dir       = 'your_directory';
 dirs.dt_dir         = strcat (dirs.proj_dir, 'Data/');
-dirs.exp_dir        = strcat (dirs.proj_dir, 'IDED_v1_Analysis/');
+dirs.exp_dir        = strcat (dirs.proj_dir, 'IDED_Analysis/');
 dirs.raw_dt_dir     = strcat(dirs.dt_dir, 'Raw_data/');
 dirs.derived_dt_dir = strcat(dirs.dt_dir, 'Derived_data/IDED/');
 dirs.analysis_dir   = strcat(dirs.exp_dir, 'Functions/');
@@ -142,59 +141,6 @@ for i = 1 : height(subs)
     end
 end
 clear subjectdata data_eeg data_stimpres data_ERP cfg_stimpres
-
-%% --------------------------------------------------------------------
-%               1b - Check for saccades
-%----------------------------------------------------------------------
-1 - Load single subject EEG and prepare epochs
-% 
-% for i = 1 : height(subs)
-%     % ensure that we don't mix up subjects by deleting subjectdata
-%     clear subjectdata
-% 
-%     % define subject
-%     subj = subs{i};
-% 
-%     % load subjectdata
-%     load(strcat(dirs.prepr_dir, subj, '_IDED_ERP_ft_prepr_1.mat'), "subjectdata");
-% 
-%     % % detect movemebt with detece movement function
-%     cfg = [];
-%     cfg.method = 'velocity2D';
-%     cfg.velocity2D.mindur  = 10;% a minimum saccade duration is around 20 ms
-%     cfg.velocity2D.velther =100;
-%     cfg.channel = {'HEOG'};
-%     cfg.trials  = 'all';
-%     [~, movement] = ft_detect_movement(cfg, subjectdata.data_ERP);
-% 
-%     % we need to figure out a way to exclude blinks from being detected
-%     % as saccades
-% 
-%     % tranform to the correct format of events
-%     saccades = [];
-%     for k = 1:height(movement)
-%         saccades(k).type     = 'Saccade';
-%         saccades(k).value    = 'Saccade';
-%         saccades(k).sample   = movement(k,1);
-%         saccades(k).duration = movement(k,2) - movement(k,1);
-%         saccades(k).offset   = [];
-%     end
-% 
-%     % include saccades in event file
-%     event = ft_read_event([dirs.derived_dt_dir, subj, '_task-IDED_eeg_prepr.dat']);
-%     all_event = [event saccades];
-% 
-% %     cfg              = [];
-% %     cfg.event        = all_event;
-% %     cfg.channel      = {'VEOG', 'HEOG'};
-% %     cfg.continuous   = 'no';
-% %     cfg.allowoverlap = 'yes';
-% %     ft_databrowser(cfg, subjectdata.data_ERP)
-% 
-%     % add saccade information in variable
-%     data_ERP.saccadeinfo.saccades = saccades;
-%     data_ERP.saccadeinfon_saccades = length(saccades);
-% end
 
 %% --------------------------------------------------------------------
 %          2a - Calculate subject average for each condition
