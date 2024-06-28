@@ -1,7 +1,7 @@
 # IDED
 **Intra-Dimensional/Extra-Dimensional set-shifting task**
 
-This code belongs to the paper "Age effects on electrocortical processing during intradimensional/extradimensional set shifting" by Darna et al. (2023), Preprint will be available soon
+This code belongs to the paper "Frontal Theta Oscillations and Cognitive Flexibility: Age-Related Modulations in EEG Activity" by Darna et al. (2024), Preprint will be available soon.
 
 ## Requirements:
 This code was developed and run using the following software:
@@ -24,7 +24,7 @@ For plots in MATLAB:
 - [Gramm Complete Data Visualization Toolbox](https://de.mathworks.com/matlabcentral/fileexchange/54465-gramm-complete-data-visualization-toolbox-ggplot2-r-like)
 
 ## Movies:
-The folder movie includes GIFs of theta power for each condition of the paradigm and each age group.
+The folder movie includes GIFs of theta power for each condition and age group.
 
 ## The IDED Paradigm:
 In order to be able to run the IDED paradigm on your computer copy [ExpCode](https://github.com/margdarna/IDED/tree/main/ExpCode) on your computer.
@@ -38,10 +38,10 @@ In order to be able to run the IDED paradigm on your computer copy [ExpCode](htt
 
 ### Additional information:
 - The [IDED.m](https://github.com/margdarna/IDED/blob/main/ExpCode/IDED.m) script creates a subject folder called "SXXX", where XXX corresponds to the subject number. The folder includes three subfolders.
-  - "Behavior": Here, behaviour files are automatically saved during and after the experiment. More details about these files are provided in [IDED.m](https://github.com/margdarna/IDED/blob/main/ExpCode/IDED.m).
-  - "EEG": Here, the EEG files can be manually saved.
+  - "Behavior": Behaviour files are automatically saved during and after the experiment here. More details about these files are provided in [IDED.m](https://github.com/margdarna/IDED/blob/main/ExpCode/IDED.m).
+  - "EEG": The EEG files can be manually saved here.
   - "Exp_Files": Here, the preallocated subject_stimulus file is saved again as backup.
-- The script does not allow double use of subject numbers. in other words, if a subject folder with a specific number already exists, you will be asked to input a different subject number. Exception is subject number 500.
+- The script does not allow double use of subject numbers. in other words, if a subject folder with a specific number already exists, you will be asked to input a different subject number. Subject number 500 is an exception.
 - Subject number 500 is reserved for testing, a.k.a whenever you use this subject number its folder will be overwritten. This is useful when you want to test if a specific aspect of the code is working and you do not wish to save any actual data.
 - The [IDED.m](https://github.com/margdarna/IDED/blob/main/ExpCode/IDED.m) requires the [Subject_stimuli](https://github.com/margdarna/IDED/tree/main/ExpCode/Subject_Stimuli) files. These are pre-generated files that have a predetermined pseudorandomized order of trials.
 - Here, I provide the subject stimuli files for 50 subjects. If you wish to create more or new ones use the function [allocate_stimuli_IDED.m](https://github.com/margdarna/IDED/blob/main/ExpCode/allocate_stimuli_IDED.m). To run it, please remember to modify the directories accordingly. Also, adapt the variable "total_subj" to the total subject number you wish to use. Be careful: this function overrides the currently available files in the [Subject_stimuli](https://github.com/margdarna/IDED/tree/main/ExpCode/Subject_Stimuli) folder.
