@@ -1,4 +1,3 @@
-
 # load libraries
 library(tidyverse)
 library(ggpubr)
@@ -101,7 +100,7 @@ latency_plot =ggplot(dat_stat, aes(x=within, y=dv*1000, colour=between)) +
 latency_plot
 
 # save plot as pdf
-setwd("//linstore01/home/mdarna/PhD/A05-SFB1436/IDED_v1_Analysis/Output/5_StatFigures")
+setwd("your_directory")
 pdf("IDED_P300_latency.pdf",         # File name
     width = 4, height = 3, # Width and height in inches
     bg = "white",    
