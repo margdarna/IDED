@@ -1,4 +1,5 @@
 function trl = IDED_stimpres_trialfun(cfg)
+% Adapted from Fieldtrip function
 % this function requires the following fields to be specified
 % cfg.dataset
 % cfg.trialdef.eventtype
